@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Szkielet
@@ -104,7 +104,7 @@ namespace SzkicPP.Model
         /// </summary>
         /// <param name="szkic"></param>
         /// <returns></returns>
-        protected bool AktualizujPikiety(SzkicPrzekroju szkic)
+        protected bool AktualizujPikiety(Szkic szkic)
         {
             if (_startIndex == _endIndex) return false;
 
@@ -130,7 +130,7 @@ namespace SzkicPP.Model
         /// </summary>
         /// <param name="g"></param>
         /// <param name="szkic"></param>
-        public virtual void Rysuj(Graphics g, SzkicPrzekroju szkic)
+        public virtual void Rysuj(Graphics g, Szkic szkic)
         {
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Kod punktu

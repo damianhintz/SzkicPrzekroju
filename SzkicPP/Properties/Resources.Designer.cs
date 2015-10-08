@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SzkicPP.Properties {
+namespace SzkicPrzekroju.Properties {
     using System;
     
     

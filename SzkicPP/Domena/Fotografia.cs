@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Xml.Serialization;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Fotografia

@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Xml.Serialization;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Element szkicu
@@ -72,7 +72,7 @@ namespace SzkicPP.Model
         /// </summary>
         /// <param name="g"></param>
         /// <param name="szkic"></param>
-        public virtual void Rysuj(Graphics g, SzkicPrzekroju szkic) { }
+        public virtual void Rysuj(Graphics g, Szkic szkic) { }
 
         /// <summary>
         /// Przesuń element do punktu (x, y)

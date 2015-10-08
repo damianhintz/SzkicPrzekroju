@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using SzkicPP.Model;
+using SzkicPrzekroju.Domena;
 
-namespace SzkicPP
+namespace SzkicPrzekroju
 {
     public partial class PikietyForm : Form
     {

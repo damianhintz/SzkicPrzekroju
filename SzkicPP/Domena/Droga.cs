@@ -4,7 +4,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Droga
@@ -35,7 +35,7 @@ namespace SzkicPP.Model
         /// </summary>
         /// <param name="g"></param>
         /// <param name="szkic"></param>
-        public override void Rysuj(Graphics g, SzkicPrzekroju szkic)
+        public override void Rysuj(Graphics g, Szkic szkic)
         {
             if (!AktualizujPikiety(szkic)) return;
             

@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Xml.Serialization;
 using System.IO;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Drawing.Drawing2D;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Szkic przekroju cieku
     /// </summary>
-    public class SzkicPrzekroju
+    public class Szkic
     {
         /// <summary>
         /// Nazwa pliku szkicu
@@ -51,7 +48,7 @@ namespace SzkicPP.Model
 
             //Szkic będzie tak samo odległy od granic strony (od góry i z boku)
             int brzegLewyY = brzegLewyX;
-            
+
             //Aktualizujemy obszar szkicu
             _obszar = new Rectangle(brzegLewyX, brzegLewyY, _rozmiar.Width, _rozmiar.Height);
         }
@@ -85,7 +82,7 @@ namespace SzkicPP.Model
                 _zmodyfikowany = true;
             }
         }
-        
+
         string _numerObiektu = "";
 
         /// <summary>
@@ -247,14 +244,14 @@ namespace SzkicPP.Model
         /// <summary>
         /// Konstruktor szkicu (domyślny)
         /// </summary>
-        public SzkicPrzekroju() : this("", "") { }
+        public Szkic() : this("", "") { }
 
         /// <summary>
         /// Konstruktor szkicu
         /// </summary>
         /// <param name="nazwaRzeki"></param>
         /// <param name="numerPrzekroju"></param>
-        public SzkicPrzekroju(string nazwaRzeki, string numerPrzekroju)
+        public Szkic(string nazwaRzeki, string numerPrzekroju)
         {
             _nazwaRzeki = nazwaRzeki;
             _numerPrzekroju = numerPrzekroju;
@@ -436,7 +433,7 @@ namespace SzkicPP.Model
             for (int i = 0; i < _pikiety.Count; i++)
             {
                 Pikieta pikieta = _pikiety[i];
-                
+
                 int alignedPosition = Alignment * i + _obszar.Top;
                 pikieta.MoveTo(_obszar.Left + StylSzkicu.PikietyWidth, alignedPosition);
 
@@ -534,7 +531,7 @@ namespace SzkicPP.Model
 
             foreach (Fotografia f in _fotografie)
                 if (f.RysujNaSzkicu) f.Rysuj(g);
-            
+
             foreach (Zabudowa z in _zabudowy)
                 if (z.RysujNaSzkicu) z.Rysuj(g);
 
@@ -564,7 +561,7 @@ namespace SzkicPP.Model
             {
                 if (Wektor.PointDistance(x, y, obiekt.X, obiekt.Y) < 10) return obiekt;
             }
-            
+
             foreach (ElementSzkicu obiekt in _teksty)
             {
                 if (Wektor.PointDistance(x, y, obiekt.X, obiekt.Y) < 10) return obiekt;
@@ -578,9 +575,9 @@ namespace SzkicPP.Model
         /// </summary>
         /// <param name="xmlFile"></param>
         /// <param name="model"></param>
-        public static void ToXML(string xmlFile, SzkicPrzekroju model)
+        public static void ToXML(string xmlFile, Szkic model)
         {
-            XmlSerializer xmlSer = new XmlSerializer(typeof(SzkicPrzekroju));
+            XmlSerializer xmlSer = new XmlSerializer(typeof(Szkic));
             StreamWriter writer = new StreamWriter(xmlFile);
             xmlSer.Serialize(writer, model);
             writer.Close();
@@ -592,7 +589,7 @@ namespace SzkicPP.Model
         /// <param name="xmlFile"></param>
         public void ToXML(string xmlFile)
         {
-            SzkicPrzekroju.ToXML(xmlFile, this);
+            Szkic.ToXML(xmlFile, this);
             _zmodyfikowany = false;
         }
 
@@ -601,16 +598,16 @@ namespace SzkicPP.Model
         /// </summary>
         /// <param name="xmlFile"></param>
         /// <returns></returns>
-        public static SzkicPrzekroju FromXML(string xmlFile)
+        public static Szkic FromXML(string xmlFile)
         {
-            SzkicPrzekroju szkic = null;
+            Szkic szkic = null;
             StreamReader reader = null;
 
             try
             {
-                XmlSerializer xmlSer = new XmlSerializer(typeof(SzkicPrzekroju));
+                XmlSerializer xmlSer = new XmlSerializer(typeof(Szkic));
                 reader = new StreamReader(xmlFile);
-                szkic = (SzkicPrzekroju)xmlSer.Deserialize(reader);
+                szkic = (Szkic)xmlSer.Deserialize(reader);
             }
             catch (Exception ex)
             {
@@ -659,7 +656,7 @@ namespace SzkicPP.Model
             //Rozmieszczamy wszystkie pikiety równomiernie na szkicu (stała odległość)
             for (int i = 2; i < _pikiety.Count; i++)
             {
-                pA = _pikiety[i-1].Punkt;
+                pA = _pikiety[i - 1].Punkt;
                 pB = _pikiety[i].Punkt;
 
                 double dist = Wektor.PointDistance(pA, pB);
@@ -672,7 +669,7 @@ namespace SzkicPP.Model
             }
 
             midDist /= (_pikiety.Count - 1);
-            int  basePos = 0;
+            int basePos = 0;
 
             pA = _pikiety[0].Punkt;
             _pikiety[0].MoveTo(_obszar.Left + StylSzkicu.PikietyWidth, _obszar.Top);

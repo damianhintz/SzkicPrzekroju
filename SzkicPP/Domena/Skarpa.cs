@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Skarpa
@@ -44,7 +44,7 @@ namespace SzkicPP.Model
         /// </summary>
         /// <param name="g"></param>
         /// <param name="szkic"></param>
-        public override void Rysuj(Graphics g, SzkicPrzekroju szkic)
+        public override void Rysuj(Graphics g, Szkic szkic)
         {
             if (!AktualizujPikiety(szkic)) return;
 

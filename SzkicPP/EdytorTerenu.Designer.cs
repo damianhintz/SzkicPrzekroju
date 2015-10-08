@@ -1,4 +1,4 @@
-﻿namespace SzkicPP
+﻿namespace SzkicPrzekroju
 {
     partial class EdytorTerenu
     {

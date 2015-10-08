@@ -1,0 +1,11 @@
+﻿SzkicPrzkroju v1.0-beta - Szkic przekroju cieku
+Copyright (c) 2012 OPGK Olsztyn. Wszelkie prawa zastrzeżone.
+Data publikacji: 24 maja 2012
+
+Nowe funkcje:
+
+** Zmiany (historia)
+Do zrobienia
+
+2012-05-24 v1.0-beta
+* pierwsza wersja testowa

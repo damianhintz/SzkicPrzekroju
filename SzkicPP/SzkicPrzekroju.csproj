@@ -61,24 +61,24 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Angles.cs" />
-    <Compile Include="Model\AtrybutySzkicu.cs" />
-    <Compile Include="Model\Droga.cs" />
-    <Compile Include="Model\Fotografia.cs" />
-    <Compile Include="Model\KodPunktu.cs" />
-    <Compile Include="Model\KodTerenu.cs" />
-    <Compile Include="Model\Koryto.cs" />
-    <Compile Include="Model\PointD.cs" />
-    <Compile Include="Model\StylSzkicu.cs" />
-    <Compile Include="Model\Teren.cs" />
-    <Compile Include="Model\ElementSzkicu.cs" />
-    <Compile Include="Model\Kierunek.cs" />
-    <Compile Include="Model\Pikieta.cs" />
-    <Compile Include="Model\Skarpa.cs" />
-    <Compile Include="Model\SzkicPrzekroju.cs" />
-    <Compile Include="Model\Tekst.cs" />
-    <Compile Include="Model\Wektor.cs" />
-    <Compile Include="Model\Zabudowa.cs" />
+    <Compile Include="Domena\Angles.cs" />
+    <Compile Include="Domena\AtrybutySzkicu.cs" />
+    <Compile Include="Domena\Droga.cs" />
+    <Compile Include="Domena\Fotografia.cs" />
+    <Compile Include="Domena\KodPunktu.cs" />
+    <Compile Include="Domena\KodTerenu.cs" />
+    <Compile Include="Domena\Koryto.cs" />
+    <Compile Include="Domena\PointD.cs" />
+    <Compile Include="Domena\StylSzkicu.cs" />
+    <Compile Include="Domena\Teren.cs" />
+    <Compile Include="Domena\ElementSzkicu.cs" />
+    <Compile Include="Domena\Kierunek.cs" />
+    <Compile Include="Domena\Pikieta.cs" />
+    <Compile Include="Domena\Skarpa.cs" />
+    <Compile Include="Domena\Szkic.cs" />
+    <Compile Include="Domena\Tekst.cs" />
+    <Compile Include="Domena\Wektor.cs" />
+    <Compile Include="Domena\Zabudowa.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PikietyForm.cs">
@@ -110,6 +110,10 @@
       <DependentUpon>PikietyForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Podręcznik użytkownika.odt" />
+    <None Include="Podręcznik użytkownika.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -119,6 +123,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Czytaj to.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

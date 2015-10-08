@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 
-namespace SzkicPP.Model
+namespace SzkicPrzekroju.Domena
 {
     /// <summary>
     /// Zabudowa

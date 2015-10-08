@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using SzkicPrzekroju.Domena;
+using SzkicPrzekroju.Properties;
 
-using SzkicPP.Model;
-
-namespace SzkicPP
+namespace SzkicPrzekroju
 {
     public partial class MainForm : Form
     {
-        SzkicPrzekroju _szkicPrzekroju = null;
+        Szkic _szkicPrzekroju = null;
         ElementSzkicu _selectedObiekt = null; //wybrany obiekt (przesuń do punktu)
         ElementSzkicu _newObiekt = null; //nowy obiekt
 
@@ -31,10 +29,10 @@ namespace SzkicPP
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             //mPrintDocument.DefaultPageSettings.Landscape = true;
-            
+
             //e.Graphics.DrawRectangle(StylSzkicu.SzkicPen, _granica);
             //e.Graphics.DrawRectangle(StylSzkicu.SzkicPen, _granicaPrint);
-            
+
             if (_szkicPrzekroju == null) return;
 
             _szkicPrzekroju.Rysuj(e.Graphics);
@@ -68,7 +66,7 @@ namespace SzkicPP
                     e.Graphics.DrawString(KodTerenu.OpisKodu(p.KodFormyTerenu),
                         StylSzkicu.PikietaFont, StylSzkicu.PikietaBrush, r, _format);
 
-                    Kierunek.Rysuj(e.Graphics, 
+                    Kierunek.Rysuj(e.Graphics,
                         _szkicPrzekroju.Obszar.Right + 15, yy, kolor,
                         rozmiar, angle, false, false, true);
 
@@ -76,7 +74,7 @@ namespace SzkicPP
                         StylSzkicu.PikietaFont, StylSzkicu.PikietaBrush, _szkicPrzekroju.Obszar.Right + 25, yyy);
 
                     e.Graphics.DrawString(string.Format("{0:F2} [m]", Wektor.PointDistance(p.Punkt, pp.Punkt)),
-                        StylSzkicu.PikietaFont, StylSzkicu.PikietaBrush, 
+                        StylSzkicu.PikietaFont, StylSzkicu.PikietaBrush,
                         _szkicPrzekroju.Obszar.Left + StylSzkicu.PikietyWidth - 100, yyy);
                 }
 
@@ -161,12 +159,12 @@ namespace SzkicPP
 
         private void drukujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mPrintDialog.ShowDialog(this);
+            printDialog.ShowDialog(this);
         }
 
         private void podgladToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mPrintPreviewDialog.ShowDialog(this);
+            previewDialog.ShowDialog(this);
         }
 
         private void mPrintDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -177,8 +175,8 @@ namespace SzkicPP
 
         private void ustawieniaStronyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mPageSetupDialog.ShowDialog(this);
-            mPrintDocument.DefaultPageSettings = mPageSetupDialog.PageSettings;
+            pageDialog.ShowDialog(this);
+            printDocument.DefaultPageSettings = pageDialog.PageSettings;
             mPictureBox.Refresh();
         }
 
@@ -289,17 +287,17 @@ namespace SzkicPP
 
                 if (cols.Length < 15) continue; //Za mało kolumn w wierszu
 
-                string nazwaCieku = cols[Properties.Settings.Default.NazwaCieku];
-                string numerObiekt = cols[Properties.Settings.Default.NumerObiekt];
-                string numerPrzekroju = cols[Properties.Settings.Default.NumerPunktu]; //nazwa pliku, numer punktu
-                string typObiektu = cols[Properties.Settings.Default.TypObiekt].Trim().ToLower(); //powinien być typu Przekrój
-                string kodPunktu = cols[Properties.Settings.Default.KodPikiety]; //kod punktu powinien być prawidłowy
-                string kodFormy = cols[Properties.Settings.Default.KodPokrycia]; //kod formy powinien być prawidłowy
-                string wspX = cols[Properties.Settings.Default.WspX];
-                string wspY = cols[Properties.Settings.Default.WspY];
-                string wspZ = cols[Properties.Settings.Default.WspZ];
-                string dataPomiaru = cols[Properties.Settings.Default.DataPomiaru];
-                string zdjecia = cols[Properties.Settings.Default.Foto].Replace("\"", "").Trim(); //numery zdjęć powinny być zgodne
+                string nazwaCieku = cols[Settings.Default.NazwaCieku];
+                string numerObiekt = cols[Settings.Default.NumerObiekt];
+                string numerPrzekroju = cols[Settings.Default.NumerPunktu]; //nazwa pliku, numer punktu
+                string typObiektu = cols[Settings.Default.TypObiekt].Trim().ToLower(); //powinien być typu Przekrój
+                string kodPunktu = cols[Settings.Default.KodPikiety]; //kod punktu powinien być prawidłowy
+                string kodFormy = cols[Settings.Default.KodPokrycia]; //kod formy powinien być prawidłowy
+                string wspX = cols[Settings.Default.WspX];
+                string wspY = cols[Settings.Default.WspY];
+                string wspZ = cols[Settings.Default.WspZ];
+                string dataPomiaru = cols[Settings.Default.DataPomiaru];
+                string zdjecia = cols[Settings.Default.Foto].Replace("\"", "").Trim(); //numery zdjęć powinny być zgodne
                 //string administrator = cols[16];
 
                 string przekroj = numerPrzekroju.Split('.')[0]; //parse np. 240.02
@@ -310,7 +308,7 @@ namespace SzkicPP
                         obiekty.Add(typObiektu, 0);
 
                     obiekty[typObiektu]++;
-                    
+
                     if (!atrybuty.ContainsKey(przekroj))
                     {
                         AtrybutySzkicu atrybutySzkicu = new AtrybutySzkicu();
@@ -356,7 +354,7 @@ namespace SzkicPP
                 AtrybutySzkicu atrybutySzkicu = atrybuty[numer];
                 List<Pikieta> punkty = kv.Value;
 
-                SzkicPrzekroju szkic = new SzkicPrzekroju(atrybutySzkicu.NazwaCieku, numerPrzekroju);
+                Szkic szkic = new Szkic(atrybutySzkicu.NazwaCieku, numerPrzekroju);
                 szkic.DataPomiaru = atrybutySzkicu.DataSzkicu;
                 szkic.NumerObiektu = atrybutySzkicu.NumerObiektu;
                 szkic.NowaGranica(_granica);
@@ -368,7 +366,7 @@ namespace SzkicPP
                     Fotografia fotografia = new Fotografia(foto);
                     szkic.DodajFotografia(fotografia);
                 }
-                
+
                 szkic.ToXML(przekrojPlik);
             }
 
@@ -376,13 +374,13 @@ namespace SzkicPP
 
             foreach (KeyValuePair<string, int> kv in obiekty)
             {
-                msg += string.Format("\n{0}: {1} {2}", kv.Key, kv.Value, 
+                msg += string.Format("\n{0}: {1} {2}", kv.Key, kv.Value,
                     kv.Key == "przekrój" ? "(" + przekroje.Count + " zapisane)" : "");
             }
 
-            MessageBox.Show(this, 
-                string.Format("Zestawienie obiektów w pliku\n{0}\n", msg), 
-                "Import przekroi...", 
+            MessageBox.Show(this,
+                string.Format("Zestawienie obiektów w pliku\n{0}\n", msg),
+                "Import przekroi...",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -398,9 +396,9 @@ namespace SzkicPP
 
             if (dialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK) return;
 
-            SzkicPrzekroju szkic = SzkicPrzekroju.FromXML(dialog.FileName);
+            Szkic szkic = Szkic.FromXML(dialog.FileName);
             szkic.NowaGranica(_granica);
-            
+
             _szkicPrzekroju = szkic;
             AktualizujForm(_szkicPrzekroju.ToString());
 
@@ -470,8 +468,8 @@ namespace SzkicPP
 
         private void oProgramieToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(this, 
-                string.Format("{0}@{1} (2012-05-17T15:11)", Application.ProductName, Application.ProductVersion), 
+            MessageBox.Show(this,
+                string.Format("{0}@{1} (2012-05-17T15:11)", Application.ProductName, Application.ProductVersion),
                 "O Programie",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -552,8 +550,8 @@ namespace SzkicPP
         private void mForm_Load(object sender, EventArgs e)
         {
             AktualizujForm("");
-            _granica = mPrintDocument.DefaultPageSettings.Bounds;
-            _granicaPrint = Rectangle.Truncate(mPrintDocument.DefaultPageSettings.PrintableArea);
+            _granica = printDocument.DefaultPageSettings.Bounds;
+            _granicaPrint = Rectangle.Truncate(printDocument.DefaultPageSettings.PrintableArea);
             mPictureBox.Size = _granica.Size;
         }
 
@@ -561,11 +559,12 @@ namespace SzkicPP
         {
             if (_selectedObiekt == null) return;
 
-            if (MessageBox.Show(this, 
-                "Usunąć obiekt ze szkicu?\n" + string.Format("{0}", _selectedObiekt.ToString()), 
-                "Usuń obiekt", 
+            if (MessageBox.Show(this,
+                "Usunąć obiekt ze szkicu?\n" + string.Format("{0}", _selectedObiekt.ToString()),
+                "Usuń obiekt",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                == System.Windows.Forms.DialogResult.No) return;
+                == DialogResult.No)
+                return;
 
             _selectedObiekt.RysujNaSzkicu = false;
             _selectedObiekt = null;
@@ -581,13 +580,13 @@ namespace SzkicPP
 
             Bitmap image = new Bitmap(_granica.Width, (int)(_granica.Height * Properties.Settings.Default.ScaleHeight));
             mPictureBox.DrawToBitmap(image, _granica);
-            
+
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = "Zapisz szkic jako obraz...";
             dialog.Filter = "*.png|*.png";
             dialog.FileName = _szkicPrzekroju.Plik.Replace(".xml", ".png");
 
-            if (dialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK) return;
+            if (dialog.ShowDialog(this) != DialogResult.OK) return;
 
             image.Save(dialog.FileName);
         }
@@ -609,7 +608,7 @@ namespace SzkicPP
 
             if (MessageBox.Show(this, "Rozmieścić pikiety na szkicu wyskalowane?", "Skalowanie pikiet",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                != System.Windows.Forms.DialogResult.Yes)
+                != DialogResult.Yes)
             {
                 return;
             }
@@ -629,7 +628,7 @@ namespace SzkicPP
 
             if (MessageBox.Show(this, "Rozmieścić pikiety na szkicu równomiernie?", "Wyrównanie pikiet",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                != System.Windows.Forms.DialogResult.Yes)
+                != DialogResult.Yes)
             {
                 return;
             }
@@ -672,11 +671,11 @@ namespace SzkicPP
             dialog.Filter = "*.xml|*.xml";
             dialog.Multiselect = true;
 
-            if (dialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK) return;
+            if (dialog.ShowDialog(this) != DialogResult.OK) return;
 
             foreach (string fileName in dialog.FileNames)
             {
-                SzkicPrzekroju szkic = SzkicPrzekroju.FromXML(fileName);
+                Szkic szkic = Szkic.FromXML(fileName);
                 szkic.NowaGranica(_granica);
 
                 _szkicPrzekroju = szkic;
@@ -694,6 +693,6 @@ namespace SzkicPP
                 image.Dispose();
             }
         }
-        
+
     }
 }

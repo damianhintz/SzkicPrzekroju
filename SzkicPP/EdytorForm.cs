@@ -6,21 +6,21 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-using SzkicPP.Model;
+using SzkicPrzekroju.Domena;
 
-namespace SzkicPP
+namespace SzkicPrzekroju
 {
     /// <summary>
     /// 
     /// </summary>
     public partial class EdytorForm : Form
     {
-        SzkicPrzekroju _szkic = null;
+        Szkic _szkic = null;
 
         /// <summary>
         /// Szkic
         /// </summary>
-        public SzkicPrzekroju Szkic
+        public Szkic Szkic
         {
             set
             {

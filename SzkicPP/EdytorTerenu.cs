@@ -7,21 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using SzkicPP.Model;
+using SzkicPrzekroju.Domena;
 
-namespace SzkicPP
+namespace SzkicPrzekroju
 {
     /// <summary>
     /// Edytor terenu
     /// </summary>
     public partial class EdytorTerenu : Form
     {
-        SzkicPrzekroju _szkic;
+        Szkic _szkic;
 
         /// <summary>
         /// Dodaj elementy terenu ze szkicu
         /// </summary>
-        public SzkicPrzekroju Szkic
+        public Szkic Szkic
         {
             set
             {
