@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+﻿using System.Drawing;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Xml.Serialization;
 
 namespace SzkicPrzekroju.Domena

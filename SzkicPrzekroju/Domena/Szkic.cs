@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Xml.Serialization;
 using System.IO;
 using System.ComponentModel;
+using SzkicPrzekroju.Domena.Matematyka;
 
 namespace SzkicPrzekroju.Domena
 {

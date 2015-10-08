@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using SzkicPrzekroju.Domena;
+using SzkicPrzekroju.Domena.Matematyka;
 using SzkicPrzekroju.Properties;
 
 namespace SzkicPrzekroju
@@ -25,7 +26,7 @@ namespace SzkicPrzekroju
             InitializeComponent();
         }
 
-        private void mPictureBox_Paint(object sender, PaintEventArgs e)
+        private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             //mPrintDocument.DefaultPageSettings.Landscape = true;
@@ -92,13 +93,13 @@ namespace SzkicPrzekroju
 
         private void mForm_KeyDown(object sender, KeyEventArgs e)
         {
-            Point point = mPictureBox.PointToClient(Cursor.Position);
+            Point point = pictureBox.PointToClient(Cursor.Position);
 
             switch (e.KeyCode)
             {
                 case Keys.Escape:
                     _newObiekt = null;
-                    mPictureBox.Refresh();
+                    pictureBox.Refresh();
                     break;
                 default:
                     break;
@@ -109,15 +110,15 @@ namespace SzkicPrzekroju
         {
             if (_newObiekt != null)
             {
-                mPictureBox.Refresh();
+                pictureBox.Refresh();
                 _newObiekt.MoveTo(e.X, e.Y);
-                _newObiekt.Rysuj(mPictureBox.CreateGraphics());
+                _newObiekt.Rysuj(pictureBox.CreateGraphics());
             }
         }
 
         private void mPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            Point point = mPictureBox.PointToClient(Cursor.Position);
+            Point point = pictureBox.PointToClient(Cursor.Position);
 
             if (_szkicPrzekroju == null) return;
 
@@ -138,7 +139,7 @@ namespace SzkicPrzekroju
                 AktualizujForm(_selectedObiekt.ToString());
             }
 
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         void AktualizujForm(string msg)
@@ -153,7 +154,7 @@ namespace SzkicPrzekroju
 
         private void dodajFotografiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Point point = mPictureBox.PointToClient(Cursor.Position);
+            Point point = pictureBox.PointToClient(Cursor.Position);
             _newObiekt = new Fotografia("0");
         }
 
@@ -177,7 +178,7 @@ namespace SzkicPrzekroju
         {
             pageDialog.ShowDialog(this);
             printDocument.DefaultPageSettings = pageDialog.PageSettings;
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         void ZapiszSzkic()
@@ -207,7 +208,7 @@ namespace SzkicPrzekroju
             edytor.ShowDialog();
 
             AktualizujForm(_szkicPrzekroju.ToString());
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void edytujObiektToolStripMenuItem_Click(object sender, EventArgs e)
@@ -222,7 +223,7 @@ namespace SzkicPrzekroju
 
             if (_selectedObiekt.Zmieniony) _szkicPrzekroju.WymagaZapisu(true);
 
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         /// <summary>
@@ -230,13 +231,13 @@ namespace SzkicPrzekroju
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void importujPrzekrojeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void importujPrzekrojeMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Plik z przekrojami (*.txt)|*.txt";
             dialog.Title = "Wybiersz plik zestawień przekroi";
 
-            if (dialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK) return;
+            if (dialog.ShowDialog(this) != DialogResult.OK) return;
 
             StreamReader reader = new StreamReader(dialog.FileName, Encoding.GetEncoding(1250));
             string wiersz = null;
@@ -384,7 +385,7 @@ namespace SzkicPrzekroju
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void openSzkicToolStripMenuItem_Click(object sender, EventArgs e)
+        private void otwórzSzkicMenuItem_Click(object sender, EventArgs e)
         {
             skalujPikietyToolStripMenuItem.Checked = false;
 
@@ -402,10 +403,10 @@ namespace SzkicPrzekroju
             _szkicPrzekroju = szkic;
             AktualizujForm(_szkicPrzekroju.ToString());
 
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
-        private void zakonczToolStripMenuItem_Click(object sender, EventArgs e)
+        private void zakończMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -414,56 +415,56 @@ namespace SzkicPrzekroju
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(0, -1);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(0, 1);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void moveLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(-1, 0);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void moveRightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(1, 0);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void moveUpFastToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(0, -5);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void moveDownFastToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(0, 5);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void moveLeftFastToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(-5, 0);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void moveRightFastToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_selectedObiekt == null) return;
             _selectedObiekt.MoveBy(5, 0);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void oProgramieToolStripMenuItem_Click(object sender, EventArgs e)
@@ -482,7 +483,7 @@ namespace SzkicPrzekroju
 
             _szkicPrzekroju.DodajSkarpa(_selectedObiekt as Pikieta);
 
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void dodajDrogaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -493,7 +494,7 @@ namespace SzkicPrzekroju
 
             _szkicPrzekroju.DodajDroga(_selectedObiekt as Pikieta);
 
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void dodajZabudowaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -538,7 +539,7 @@ namespace SzkicPrzekroju
             if (ZamknijSzkic())
             {
                 AktualizujForm("");
-                mPictureBox.Refresh();
+                pictureBox.Refresh();
             }
         }
 
@@ -552,7 +553,7 @@ namespace SzkicPrzekroju
             AktualizujForm("");
             _granica = printDocument.DefaultPageSettings.Bounds;
             _granicaPrint = Rectangle.Truncate(printDocument.DefaultPageSettings.PrintableArea);
-            mPictureBox.Size = _granica.Size;
+            pictureBox.Size = _granica.Size;
         }
 
         private void deleteObiektToolStripMenuItem_Click(object sender, EventArgs e)
@@ -571,7 +572,7 @@ namespace SzkicPrzekroju
             _szkicPrzekroju.WymagaZapisu(true);
 
             AktualizujForm("");
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void zapiszJakoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -579,7 +580,7 @@ namespace SzkicPrzekroju
             if (_szkicPrzekroju == null) return;
 
             Bitmap image = new Bitmap(_granica.Width, (int)(_granica.Height * Properties.Settings.Default.ScaleHeight));
-            mPictureBox.DrawToBitmap(image, _granica);
+            pictureBox.DrawToBitmap(image, _granica);
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = "Zapisz szkic jako obraz...";
@@ -599,7 +600,7 @@ namespace SzkicPrzekroju
             edytor.Szkic = _szkicPrzekroju;
             edytor.ShowDialog(this);
 
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void skalujPikietyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -614,12 +615,12 @@ namespace SzkicPrzekroju
             }
 
             _szkicPrzekroju.SkalujPikiety(false, zachowajPionPikietToolStripMenuItem.Checked);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void opisyTerenuToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void alignPikietyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -634,7 +635,7 @@ namespace SzkicPrzekroju
             }
 
             _szkicPrzekroju.SkalujPikiety(true, zachowajPionPikietToolStripMenuItem.Checked);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void dodajBudynekToolStripMenuItem_Click(object sender, EventArgs e)
@@ -659,7 +660,7 @@ namespace SzkicPrzekroju
         {
             if (_szkicPrzekroju == null) return;
             _szkicPrzekroju.RysujStrzalkaPolnocy(strzalkaPolnocyToolStripMenuItem.Checked);
-            mPictureBox.Refresh();
+            pictureBox.Refresh();
         }
 
         private void zapiszWszystkieJakoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -681,10 +682,10 @@ namespace SzkicPrzekroju
                 _szkicPrzekroju = szkic;
                 AktualizujForm(_szkicPrzekroju.ToString());
 
-                mPictureBox.Refresh();
+                pictureBox.Refresh();
 
                 Bitmap image = new Bitmap(_granica.Width, (int)(_granica.Height * Properties.Settings.Default.ScaleHeight));
-                mPictureBox.DrawToBitmap(image, _granica);
+                pictureBox.DrawToBitmap(image, _granica);
 
                 string obrazName = fileName.Replace(".xml", ".png");
 
