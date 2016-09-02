@@ -144,7 +144,7 @@ namespace SzkicPrzekroju
 
         void AktualizujForm(string msg)
         {
-            Text = string.Format("{0}@{1} {2}", Application.ProductName, Application.ProductVersion, msg);
+            Text = string.Format("{0} v{1} {2}", Application.ProductName, Application.ProductVersion, msg);
         }
 
         private void dodajTekstToolStripMenuItem_Click(object sender, EventArgs e)
